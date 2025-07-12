@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ReWear - User Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-dark: #388E3C;
+      --secondary: #FF9800;
+      --light-gray: #f5f5f5;
+      --medium-gray: #e0e0e0;
+      --dark-gray: #757575;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: var(--light-gray);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 2rem;
+    }
+    
+    .sidebar {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      height: fit-content;
+    }
+    
+    .sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    
+    .sidebar-nav li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: var(--dark-gray);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      background: var(--light-gray);
+      color: var(--primary);
+    }
+    
+    .sidebar-nav i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .main-content {
+      display: grid;
+      gap: 2rem;
+    }
+    
+    .card {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--medium-gray);
+    }
+    
+    .card-title {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--primary-dark);
+    }
+    
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-weight: 500;
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-secondary {
+      background: var(--secondary);
+    }
+    
+    .btn-secondary:hover {
+      opacity: 0.9;
+    }
+    
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--medium-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1.5rem;
+      font-size: 2rem;
+      color: var(--dark-gray);
+    }
+    
+    .profile-info h3 {
+      margin: 0 0 0.5rem 0;
+    }
+    
+    .profile-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--dark-gray);
+    }
+    
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .item-card {
+      border: 1px solid var(--medium-gray);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .item-image {
+      height: 150px;
+      background: var(--medium-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-gray);
+    }
+    
+    .item-details {
+      padding: 1rem;
+    }
+    
+    .item-title {
+      margin: 0 0 0.5rem 0;
+      font-size: 1rem;
+    }
+    
+    .item-status {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .status-available {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+    
+    .status-swapped {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+    
+    .status-pending {
+      background: #E3F2FD;
+      color: #1565C0;
+    }
+    
+    .swaps-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .swap-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--medium-gray);
+      transition: background 0.2s;
+    }
+    
+    .swap-item:last-child {
+      border-bottom: none;
+    }
+    
+    .swap-item:hover {
+      background: var(--light-gray);
+    }
+    
+    .swap-image {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      background: var(--medium-gray);
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-gray);
+    }
+    
+    .swap-details {
+      flex: 1;
+    }
+    
+    .swap-partner {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .swap-item-name {
+      color: var(--dark-gray);
+      font-size: 0.875rem;
+    }
+    
+    .swap-status {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    
+    .status-ongoing {
+      color: var(--secondary);
+    }
+    
+    .status-completed {
+      color: var(--primary);
+    }
+    
+    .swap-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .action-btn {
+      background: none;
+      border: 1px solid var(--medium-gray);
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+      background: var(--light-gray);
+    }
+    
+    .action-btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .action-btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .points-display {
+      display: flex;
+      align-items: center;
+      background: #FFF9C4;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+    }
+    
+    .points-icon {
+      font-size: 1.5rem;
+      color: #FBC02D;
+      margin-right: 1rem;
+    }
+    
+    .points-value {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #F57F17;
+    }
+    
+    .points-label {
+      margin-left: auto;
+      color: var(--dark-gray);
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .profile-summary {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+      
+      .profile-stats {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>ReWear</h1>
+      <div class="user-avatar">JD</div>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="profile-summary">
+        <div class="profile-avatar">JD</div>
+        <div class="profile-info">
+          <h3>Jane Doe</h3>
+          <p>Member since 2023</p>
+        </div>
+      </div>
+      
+      <nav>
+        <ul class="sidebar-nav">
+          <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="#"><i class="fas fa-tshirt"></i> My Items</a></li>
+          <li><a href="#"><i class="fas fa-exchange-alt"></i> Swaps</a></li>
+          <li><a href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+          <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+        </ul>
+      </nav>
+      
+      <div class="points-display">
+        <div class="points-icon"><i class="fas fa-coins"></i></div>
+        <div class="points-value">120 pts</div>
+        <div class="points-label">Reward Points</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">My Profile</h2>
+          <button class="btn">Edit Profile</button>
+        </div>
+        
+        <div class="profile-stats">
+          <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Items Shared</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Successful Swaps</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
+        
+        <div class="contact-info">
+          <p><strong>Email:</strong> jane@example.com</p>
+          <p><strong>Location:</strong> San Francisco, CA</p>
+          <p><strong>Bio:</strong> Fashion enthusiast passionate about sustainable clothing swaps!</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">My Items</h2>
+          <button class="btn btn-secondary"><i class="fas fa-plus"></i> Add Item</button>
+        </div>
+        
+        <div class="items-grid" id="uploadedItems">
+          <!-- Items will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Active Swaps</h2>
+        </div>
+        
+        <ul class="swaps-list" id="swapsList">
+          <!-- Swaps will be populated by JavaScript -->
+        </ul>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const uploadedItems = [
+      { 
+        title: 'Blue Jeans', 
+        status: 'Available',
+        image: '👖'
+      },
+      { 
+        title: 'Red Hoodie', 
+        status: 'Swapped',
+        image: '🧥'
+      },
+      { 
+        title: 'White Sneakers', 
+        status: 'Available',
+        image: '👟'
+      },
+      { 
+        title: 'Black Dress', 
+        status: 'Pending',
+        image: '👗'
+      },
+    ];
+
+    const swaps = [
+      { 
+        item: 'Blue Jeans', 
+        partner: 'Sam Wilson', 
+        status: 'Ongoing',
+        date: 'Started 3 days ago'
+      },
+      { 
+        item: 'Black Jacket', 
+        partner: 'Alex Morgan', 
+        status: 'Completed',
+        date: 'Completed 2 weeks ago'
+      },
+      { 
+        item: 'Striped T-shirt', 
+        partner: 'Taylor Swift', 
+        status: 'Ongoing',
+        date: 'Started 1 day ago'
+      },
+    ];
+
+    // Populate items grid
+    const uploadedItemsList = document.getElementById('uploadedItems');
+    uploadedItems.forEach(item => {
+      const itemCard = document.createElement('div');
+      itemCard.className = 'item-card';
+      
+      itemCard.innerHTML = `
+        <div class="item-image">${item.image}</div>
+        <div class="item-details">
+          <h4 class="item-title">${item.title}</h4>
+          <span class="item-status status-${item.status.toLowerCase()}">${item.status}</span>
+        </div>
+      `;
+      
+      uploadedItemsList.appendChild(itemCard);
+    });
+
+    // Populate swaps list
+    const swapsList = document.getElementById('swapsList');
+    swaps.forEach(swap => {
+      const li = document.createElement('li');
+      li.className = 'swap-item';
+      
+      li.innerHTML = `
+        <div class="swap-image">👕</div>
+        <div class="swap-details">
+          <div class="swap-partner">${swap.partner}</div>
+          <div class="swap-item-name">${swap.item}</div>
+          <div class="swap-date">${swap.date}</div>
+        </div>
+        <div class="swap-status status-${swap.status.toLowerCase()}">${swap.status}</div>
+        <div class="swap-actions">
+          <button class="action-btn action-btn-primary"><i class="fas fa-comment"></i></button>
+          ${swap.status === 'Ongoing' ? 
+            '<button class="action-btn"><i class="fas fa-check"></i></button>' : 
+            '<button class="action-btn"><i class="fas fa-star"></i> Rate</button>'}
+        </div>
+      `;
+      
+      swapsList.appendChild(li);
+    });
+  </script>
+</body>
+</html>

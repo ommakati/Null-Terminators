@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Detail - ReWear</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .gallery {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+    .gallery img {
+      height: 250px;
+      border-radius: 8px;
+    }
+    .details {
+      margin-top: 20px;
+    }
+    .details h2 {
+      margin-bottom: 10px;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .info-table td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .actions {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .actions button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .swap-btn {
+      background-color: #2196F3;
+      color: white;
+    }
+    .redeem-btn {
+      background-color: #FF9800;
+      color: white;
+    }
+    .availability {
+      font-weight: bold;
+      color: green;
+    }
+    .not-available {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Item Details</h1>
+  </header>
+
+  <div class="container">
+    <div class="gallery" id="gallery">
+      <img src="https://via.placeholder.com/250?text=Front" alt="Front View">
+      <img src="https://via.placeholder.com/250?text=Back" alt="Back View">
+      <img src="https://via.placeholder.com/250?text=Close-up" alt="Close-up View">
+    </div>
+
+    <div class="details">
+      <h2>Red Cotton Hoodie</h2>
+      <table class="info-table">
+        <tr><td><strong>Description:</strong></td><td>Soft cotton hoodie in red, lightly used, size M.</td></tr>
+        <tr><td><strong>Category:</strong></td><td>Topwear</td></tr>
+        <tr><td><strong>Size:</strong></td><td>M</td></tr>
+        <tr><td><strong>Condition:</strong></td><td>Gently Used</td></tr>
+        <tr><td><strong>Tags:</strong></td><td>Hoodie, Red, Cotton, Winter</td></tr>
+        <tr><td><strong>Uploaded by:</strong></td><td>Jane Doe (jane@example.com)</td></tr>
+        <tr><td><strong>Availability:</strong></td><td><span id="status" class="availability">Available</span></td></tr>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="swap-btn" onclick="alert('Swap Request Sent')">Swap Request</button>
+      <button class="redeem-btn" onclick="alert('Redeemed using 50 points')">Redeem via Points</button>
+    </div>
+  </div>
+
+  <script>
+    // Simulate dynamic availability status
+    const available = true; // change to false to simulate unavailable
+    const statusSpan = document.getElementById('status');
+    if (!available) {
+      statusSpan.textContent = 'Not Available';
+      statusSpan.classList.remove('availability');
+      statusSpan.classList.add('not-available');
+      document.querySelectorAll('.actions button').forEach(btn => btn.disabled = true);
+    }
+  </script>
+</body>
+</html>
